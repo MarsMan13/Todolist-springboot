@@ -38,4 +38,17 @@ public class TodoDao {
         todoEntity.setPlan(planEntity);
         return todoEntity;
     }
+
+    public void deleteTodoById(long id){
+        TodoEntity todoEntity = todoRepository.findById(id).orElseThrow();
+        todoRepository.delete(todoEntity);
+    }
+
+    public TodoEntity updateTodoByDto(TodoDto todoDto){
+        long id = todoDto.getId();
+        TodoEntity todoEntity = todoRepository.findById(id).orElseThrow();
+        todoEntity.setContent(todoDto.getContent());
+        todoRepository.save(todoEntity);
+        return todoEntity;
+    }
 }

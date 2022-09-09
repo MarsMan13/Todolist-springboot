@@ -34,4 +34,17 @@ public class PlanDao {
         PlanEntity planEntity = planEntityOptional.orElseThrow();
         return planEntity;
     }
+
+    public void deletePlanById(long id){
+        PlanEntity planEntity = planRepository.findById(id).orElseThrow();
+        planRepository.delete(planEntity);
+    }
+
+    public PlanEntity updatePlanByDto(PlanDto planDto){
+        long id = planDto.getId();
+        PlanEntity planEntity = planRepository.findById(id).orElseThrow();
+        planEntity.setTitle(planDto.getTitle());
+        planRepository.save(planEntity);
+        return planEntity;
+    }
 }

@@ -43,4 +43,8 @@ public class TodoListService {
         todoEntity = todoDao.setPlan(todoEntity, planEntity);
         return todoEntity.toDto();
     }
+
+    public PlanDto getPlanById(long id){
+        return planDao.getPlanById(id).toDto();
+    }
 }

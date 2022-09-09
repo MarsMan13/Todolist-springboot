@@ -55,4 +55,25 @@ public class TagDao {
         planEntity.getTagList().add(tagEntity);
         return planEntity;
     }
+    public void deleteTagById(long id){
+        TagEntity tagEntity = tagRepository.findById(id).orElseThrow();
+        tagRepository.delete(tagEntity);
+    }
+
+    public TagEntity updateTagByDto(TagDto tagDto){
+        long id = tagDto.getId();
+        TagEntity tagEntity = tagRepository.findById(id).orElseThrow();
+        tagEntity.setTag(tagDto.getTag());
+        tagRepository.save(tagEntity);
+        return tagEntity;
+    }
+
+    public void deleteTagFromPlan(long planId, long tagId){
+        PlanEntity planEntity = planRepository.findById(planId).orElseThrow();
+        TagEntity tagEntity = tagRepository.findById(tagId).orElseThrow();
+        if(planEntity.getTagList() != null && planEntity.getTagList().contains(tagEntity))
+            planEntity.getTagList().remove(tagEntity);
+        if(tagEntity.getPlanList() != null && tagEntity.getPlanList().contains(planEntity))
+            tagEntity.getPlanList().remove(planEntity);
+    }
 }
